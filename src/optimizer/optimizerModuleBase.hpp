@@ -1,6 +1,7 @@
 #pragma once
 #include "../compiledCode.hpp"
 #include <functional>
+#include <parser/sqf/default.h>
 
 struct astnode;
 
@@ -77,7 +78,7 @@ public:
         bool constant = false;
     };
 
-    static Node nodeFromAST(const astnode& input); //#TODO move to optimizer
+    static Node nodeFromAST(const ::sqf::parser::sqf::impl_default::astnode& input); //#TODO move to optimizer
 
 
     Signal<bool(const Node&, const bool&)> canBinaryBeConst;//#TODO remove
