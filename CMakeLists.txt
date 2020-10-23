@@ -83,8 +83,9 @@ set(INCLUDE_PATH_ZSTD "${LIBRARY_PATH_ZSTD}/lib")
 
 set(SQFVM_BUILD_EXECUTABLE OFF CACHE BOOL "no" FORCE)
 set(SQFVM_BUILD_LIBRARY OFF CACHE BOOL "no" FORCE)
-set(SQFVM_BUILD_STATIC_LIBRARY OFF CACHE BOOL "no" FORCE)
-set(SQFVM_BUILD_STATIC_LIBRARY_NC ON CACHE BOOL "yes" FORCE)
+set(SQFVM_BUILD_LIBRARY_SQC_SUPPORT OFF CACHE BOOL "no" FORCE)
+set(SQFVM_BUILD_STATIC_LIBRARY ON CACHE BOOL "no" FORCE)
+set(SQFVM_BUILD_STATIC_LIBRARY_SQC_SUPPORT OFF CACHE BOOL "no" FORCE)
 
 add_subdirectory(${LIBRARY_PATH_SQFVM})
 add_definitions(/DLOADFILE_CACHE) #SQF VM fileio.cpp cache
@@ -97,7 +98,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${INCLUDE_PATH_ZSTD} ${LIBRARY_P
 
 #target_link_libraries("ArmaScriptCompiler" ${CMAKE_THREAD_LIBS_INIT})
 
-target_link_libraries("ArmaScriptCompiler" slibsqfvm_nc libzstd_static)
+target_link_libraries("ArmaScriptCompiler" slibsqfvm libzstd_static)
 
 set_target_properties("ArmaScriptCompiler" PROPERTIES PREFIX "")
 set_target_properties("ArmaScriptCompiler" PROPERTIES FOLDER ArmaScriptCompiler)
@@ -145,7 +146,7 @@ else()
 	)
 	
 	target_compile_options(
-		slibsqfvm_nc PRIVATE 
+		slibsqfvm PRIVATE
 		"/MP" "/Zi"
 		"$<$<CONFIG:Release>:/MT>"
 		"$<$<CONFIG:Release>:/Ox>"
@@ -156,7 +157,7 @@ else()
 		"/DLOADFILE_CACHE"
 	)
 	target_link_options("ArmaScriptCompiler" PRIVATE "/OPT:REF" "/OPT:ICF" "/DEBUG:FULL" "/LTCG") 
-	target_link_options(slibsqfvm_nc PRIVATE "/OPT:REF" "/OPT:ICF" "/DEBUG:FULL" "/LTCG") 
+	target_link_options(slibsqfvm PRIVATE "/OPT:REF" "/OPT:ICF" "/DEBUG:FULL" "/LTCG")
 endif()
 
 #Binary signing

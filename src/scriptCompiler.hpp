@@ -30,5 +30,6 @@ private:
 
 
     std::unique_ptr<sqf::runtime::runtime> vm;
+    std::unique_ptr<sqf::runtime::runtime::runtime_conf> configuration;
     std::unique_ptr<Logger> logger;
 };

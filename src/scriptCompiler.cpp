@@ -16,9 +16,10 @@ std::once_flag commandMapInitFlag;
 
 ScriptCompiler::ScriptCompiler(const std::vector<std::filesystem::path>& includePaths) {
     logger = std::make_unique<StdOutLogger>();
-    vm = std::make_unique<sqf::runtime::runtime>(*logger);
-    vm->parser_sqf(std::make_unique<sqf::parser::sqf::impl_default>());
-    vm->parser_preprocessor(std::make_unique<sqf::parser::preprocessor::impl_default>());
+    configuration = std::make_unique<sqf::runtime::runtime::runtime_conf>();
+    vm = std::make_unique<sqf::runtime::runtime>(*logger, *configuration);
+    vm->parser_sqf(std::make_unique<sqf::parser::sqf::impl_default>(*logger));
+    vm->parser_preprocessor(std::make_unique<sqf::parser::preprocessor::impl_default>(*logger));
     
 
     std::call_once(commandMapInitFlag, [&]() {
