@@ -272,10 +272,10 @@ OptimizerModuleBase::Node OptimizerModuleBase::nodeFromAST(const astnode& input)
             std::vector<std::vector<astnode>::const_iterator> lastChildren;
 
             while (!statements->children.empty()) {
-                auto& lastChild = (statements->children.end() - 1);
+                auto lastChild = (statements->children.end() - 1);
 
                 lastToken = lastChild->token.offset + lastChild->token.contents.size();
-                statements = lastChild._Ptr;
+                statements = &lastChild->children[0];
                 lastChildren.emplace_back(lastChild);
             }
 
