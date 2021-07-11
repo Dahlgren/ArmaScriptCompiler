@@ -19,3 +19,27 @@ jobs:
         with:
           name: Windows x64
           path: Release
+
+  windows-test:
+    runs-on: windows-2019
+    needs: windows
+    steps:
+      - name: Git checkout CBA A3
+        uses: actions/checkout@v2
+        with:
+          repository: CBATeam/CBA_A3
+          path: x/cba
+
+      - name: Download ArmaScriptCompiler artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: Windows x64
+
+      - name: Compile CBA A3
+        run: |
+          xcopy x\cba\include . /s /e /h
+          subst P: .
+          cd P:
+          cd x\cba
+          ..\..\Release\ArmaScriptCompiler.exe
+
